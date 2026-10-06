@@ -5,6 +5,7 @@ class Journal {
   final String body;
   bool isPinned;
   final List tags;
+  final DateTime createdAt;
 
   Journal({
     required this.id,
@@ -13,5 +14,6 @@ class Journal {
     required this.body,
     required this.isPinned,
     required this.tags,
+    required this.createdAt
   });
 }

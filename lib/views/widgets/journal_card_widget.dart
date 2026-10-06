@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:journalapp/models/journal_app_models.dart';
 import 'package:journalapp/views/pages/journal_entry_page.dart';
 
@@ -17,7 +18,7 @@ class JournalCardWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => JournalEntryPage()),
+              MaterialPageRoute(builder: (context) => JournalEntryPage(entry: entry,)),
             );
           },
           child: Ink(
@@ -54,7 +55,7 @@ class JournalCardWidget extends StatelessWidget {
                       ),
                      
                       Text(
-                        'Oct 10',
+                        DateFormat("MMM d").format(entry.createdAt),
                         style: GoogleFonts.karla(color: Colors.black54),
                       ),
                     ],

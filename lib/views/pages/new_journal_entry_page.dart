@@ -234,6 +234,7 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                               body: _entryBodyController.text,
                               isPinned: false,
                               tags: ['Work'],
+                              createdAt: DateTime.now()
                             ),
                           );
 

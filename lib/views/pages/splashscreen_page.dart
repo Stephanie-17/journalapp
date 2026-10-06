@@ -15,6 +15,7 @@ class SplashscreenPage extends StatelessWidget {
               Image.asset(
                 "assets/images/splashImg.png",
                 fit: BoxFit.cover,
+                width: double.infinity,
                 height: double.infinity,
               ),
               Container(

@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:journalapp/data/journal_store.dart';
+import 'package:journalapp/models/journal_app_models.dart';
 
-class NewJournalEntryPage extends StatelessWidget {
+class NewJournalEntryPage extends StatefulWidget {
   const NewJournalEntryPage({super.key});
 
   @override
+  State<NewJournalEntryPage> createState() => _NewJournalEntryPageState();
+}
+
+final _entryTitleController = TextEditingController();
+final _entryBodyController = TextEditingController();
+
+class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
+  @override
   Widget build(BuildContext context) {
+    var date = DateTime.now().toString();
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -22,7 +33,7 @@ class NewJournalEntryPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "FRIDAY, SEP 4",
+                  "$date ",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     color: Colors.grey,
@@ -32,6 +43,7 @@ class NewJournalEntryPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 TextField(
+                  controller: _entryTitleController,
                   cursorColor: const Color.fromARGB(255, 85, 85, 85),
                   style: GoogleFonts.merriweather(
                     color: const Color.fromARGB(255, 85, 85, 85),
@@ -138,6 +150,7 @@ class NewJournalEntryPage extends StatelessWidget {
                 SizedBox(height: 35),
 
                 TextField(
+                  controller: _entryBodyController,
                   maxLines: 20,
                   minLines: 5,
                   cursorColor: Colors.black,
@@ -210,7 +223,26 @@ class NewJournalEntryPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     FilledButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_entryTitleController.text.isNotEmpty &&
+                            _entryBodyController.text.isNotEmpty) {
+                          journalStore.addEntry(
+                            Journal(
+                              id: DateTime.now().second,
+                              title: _entryTitleController.text,
+                              mood: "angry",
+                              body: _entryBodyController.text,
+                              isPinned: false,
+                              tags: ['Work'],
+                            ),
+                          );
+
+                          setState(() {
+                            _entryTitleController.clear();
+                            _entryBodyController.clear();
+                          });
+                        }
+                      },
                       style: ButtonStyle(
                         shape: WidgetStateProperty.all(
                           RoundedRectangleBorder(

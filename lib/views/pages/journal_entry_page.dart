@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:journalapp/data/journal_store.dart';
 import 'package:journalapp/models/journal_app_models.dart';
 import 'package:intl/intl.dart';
 
-class JournalEntryPage extends StatelessWidget {
+class JournalEntryPage extends StatefulWidget {
   final Journal entry;
   const JournalEntryPage({super.key, required this.entry});
 
+  @override
+  State<JournalEntryPage> createState() => _JournalEntryPageState();
+}
+
+class _JournalEntryPageState extends State<JournalEntryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +24,13 @@ class JournalEntryPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.bookmark, color: Colors.grey),
+            onPressed: () {
+              journalStore.pinEntry(widget.entry.id);
+              setState(() {
+                
+              });
+            },
+            icon: Icon(Icons.bookmark, color: widget.entry.isPinned ? Colors.deepOrange : Colors.grey),
           ),
           IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
         ],
@@ -43,7 +54,7 @@ class JournalEntryPage extends StatelessWidget {
                         mainAxisAlignment: .spaceBetween,
                         children: [
                           Text(
-                            DateFormat("MMMM d y").format(entry.createdAt),
+                            DateFormat("MMMM d y").format(widget.entry.createdAt),
                             style: GoogleFonts.karla(fontSize: 12),
                           ),
                           Container(
@@ -58,13 +69,13 @@ class JournalEntryPage extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        "${entry.title} ",
+                        "${widget.entry.title} ",
                         style: GoogleFonts.merriweather(fontSize: 24),
                       ),
                       SizedBox(height: 15),
                       Wrap(
                         spacing: 5,
-                        children: entry.tags
+                        children: widget.entry.tags
                             .map(
                               (tag) => Chip(
                                 label: Text("#$tag".toLowerCase()),
@@ -78,7 +89,7 @@ class JournalEntryPage extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        "${entry.body} ",
+                        "${widget.entry.body} ",
                         style: GoogleFonts.karla(fontSize: 17),
                       ),
                     ],

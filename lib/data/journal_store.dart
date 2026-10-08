@@ -21,6 +21,17 @@ class JournalStore extends ChangeNotifier {
 
     entry.isPinned = !(entry.isPinned);
   }
+
+  void setMood(int id, String mood) {
+    final entry = _entries.firstWhere((e) => e.id == id);
+    entry.mood = mood;
+  }
+
+  void addTags(int id, String tag) {
+    final entry = _entries.firstWhere((e) => e.id == id);
+
+    entry.tags.add(tag);
+  }
 }
 
 final journalStore = JournalStore();

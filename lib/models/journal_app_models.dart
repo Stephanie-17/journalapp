@@ -1,10 +1,10 @@
 class Journal {
   final int id;
   final String title;
-  final String mood;
+  String mood;
   final String body;
   bool isPinned;
-  final List tags;
+  List tags;
   final DateTime createdAt;
 
   Journal({

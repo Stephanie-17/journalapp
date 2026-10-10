@@ -87,6 +87,11 @@ class _JournalEntryPageState extends State<JournalEntryPage> {
                             )
                             .toList(),
                       ),
+                      SizedBox(height: 5,),
+                      Text(
+                        "Mood: ${widget.entry.mood} ",
+                        style: GoogleFonts.karla(fontSize: 13, fontWeight: FontWeight.bold),
+                      ),
                       SizedBox(height: 20),
                       Text(
                         "${widget.entry.body} ",

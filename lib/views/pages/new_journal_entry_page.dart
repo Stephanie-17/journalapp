@@ -12,6 +12,7 @@ class NewJournalEntryPage extends StatefulWidget {
 
 final _entryTitleController = TextEditingController();
 final _entryBodyController = TextEditingController();
+var currentMood = '';
 
 class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
   @override
@@ -93,7 +94,9 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                         94,
                       ),
                       iconColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        currentMood = 'Great';
+                      },
                     ),
 
                     MoodButton(
@@ -106,7 +109,9 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                         228,
                       ),
                       iconColor: Colors.black,
-                      onPressed: () {},
+                      onPressed: () {
+                        currentMood = 'Good';
+                      },
                     ),
 
                     MoodButton(
@@ -119,7 +124,9 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                         179,
                       ),
                       iconColor: Colors.black,
-                      onPressed: () {},
+                      onPressed: () {
+                         currentMood = 'Neutral';
+                      },
                     ),
                     MoodButton(
                       icon: Icons.sentiment_dissatisfied,
@@ -131,7 +138,9 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                         165,
                       ),
                       iconColor: Colors.black,
-                      onPressed: () {},
+                      onPressed: () {
+                         currentMood = 'Rough';
+                      },
                     ),
                     MoodButton(
                       icon: Icons.sentiment_very_dissatisfied,
@@ -143,7 +152,9 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                         6,
                       ),
                       iconColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                         currentMood = 'Hard';
+                      },
                     ),
                   ],
                 ),
@@ -186,6 +197,7 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                   runSpacing: 5,
                   children: [
                     Chip(
+                      
                       label: Text("Personal"),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.circular(20),
@@ -230,11 +242,11 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                             Journal(
                               id: DateTime.now().second,
                               title: _entryTitleController.text,
-                              mood: "angry",
+                              mood: currentMood.isNotEmpty ? currentMood :  "Good",
                               body: _entryBodyController.text,
                               isPinned: false,
                               tags: ['Work'],
-                              createdAt: DateTime.now()
+                              createdAt: DateTime.now(),
                             ),
                           );
 

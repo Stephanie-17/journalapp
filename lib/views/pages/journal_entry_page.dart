@@ -26,13 +26,20 @@ class _JournalEntryPageState extends State<JournalEntryPage> {
           IconButton(
             onPressed: () {
               journalStore.pinEntry(widget.entry.id);
-              setState(() {
-                
-              });
+              setState(() {});
             },
-            icon: Icon(Icons.bookmark, color: widget.entry.isPinned ? Colors.deepOrange : Colors.grey),
+            icon: Icon(
+              Icons.bookmark,
+              color: widget.entry.isPinned ? Colors.deepOrange : Colors.grey,
+            ),
           ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+          IconButton(
+            onPressed: () {
+              journalStore.removeEntry(widget.entry);
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.delete),
+          ),
         ],
       ),
       body: SafeArea(
@@ -54,7 +61,9 @@ class _JournalEntryPageState extends State<JournalEntryPage> {
                         mainAxisAlignment: .spaceBetween,
                         children: [
                           Text(
-                            DateFormat("MMMM d y").format(widget.entry.createdAt),
+                            DateFormat(
+                              "MMMM d y",
+                            ).format(widget.entry.createdAt),
                             style: GoogleFonts.karla(fontSize: 12),
                           ),
                           Container(
@@ -87,10 +96,13 @@ class _JournalEntryPageState extends State<JournalEntryPage> {
                             )
                             .toList(),
                       ),
-                      SizedBox(height: 5,),
+                      SizedBox(height: 5),
                       Text(
                         "Mood: ${widget.entry.mood} ",
-                        style: GoogleFonts.karla(fontSize: 13, fontWeight: FontWeight.bold),
+                        style: GoogleFonts.karla(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: 20),
                       Text(

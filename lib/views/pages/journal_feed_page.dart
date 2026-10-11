@@ -11,33 +11,44 @@ class JournalFeedPage extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Journal',
-              style: GoogleFonts.merriweather(
-                fontSize: 25,
-                fontWeight: FontWeight.w500,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       Text(
+                'Journal',
+                style: GoogleFonts.merriweather(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              'A quiet place for your thoughts.',
-              style: GoogleFonts.karla(
-                color: const Color.fromARGB(149, 0, 0, 0),
+              SizedBox(height: 5),
+              Text(
+                'A quiet place for your thoughts.',
+                style: GoogleFonts.karla(
+                  color: const Color.fromARGB(149, 0, 0, 0),
+                ),
               ),
-            ),
-      
-            SizedBox(height: 20),
-            Expanded(
-              child: ListenableBuilder(
+                    ],
+                  )
+                    
+                ],
+              ),
+             
+                
+              SizedBox(height: 20),
+              ListenableBuilder(
                 listenable: journalStore,
                 builder: (context, child) {
                   final entries = journalStore.entries;
                   if (entries.isNotEmpty) {
-                    return ListView(
-
+                    return Column(
+                      
                       children: entries
                           .map((e) => JournalCardWidget(entry: e))
                           .toList(),
@@ -55,10 +66,10 @@ class JournalFeedPage extends StatelessWidget {
                  
                 },
               ),
-            ),
-      
-            SizedBox(height: 20),
-          ],
+                
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

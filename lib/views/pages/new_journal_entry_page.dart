@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:journalapp/data/journal_store.dart';
 import 'package:journalapp/models/journal_app_models.dart';
+import 'package:journalapp/views/pages/journal_feed_page.dart';
 
 class NewJournalEntryPage extends StatefulWidget {
   const NewJournalEntryPage({super.key});
@@ -13,6 +14,7 @@ class NewJournalEntryPage extends StatefulWidget {
 final _entryTitleController = TextEditingController();
 final _entryBodyController = TextEditingController();
 var currentMood = '';
+List<String> entryTags = [];
 
 class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
   @override
@@ -125,7 +127,7 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                       ),
                       iconColor: Colors.black,
                       onPressed: () {
-                         currentMood = 'Neutral';
+                        currentMood = 'Neutral';
                       },
                     ),
                     MoodButton(
@@ -139,7 +141,7 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                       ),
                       iconColor: Colors.black,
                       onPressed: () {
-                         currentMood = 'Rough';
+                        currentMood = 'Rough';
                       },
                     ),
                     MoodButton(
@@ -153,7 +155,7 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                       ),
                       iconColor: Colors.white,
                       onPressed: () {
-                         currentMood = 'Hard';
+                        currentMood = 'Hard';
                       },
                     ),
                   ],
@@ -196,35 +198,85 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                   spacing: 10,
                   runSpacing: 5,
                   children: [
-                    Chip(
-                      
-                      label: Text("Personal"),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(20),
-                      ),
-                    ),
-                    Chip(
-                      label: Text(
-                        "Work",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      backgroundColor: Color.fromARGB(255, 169, 76, 0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(20),
-                      ),
-                    ),
-                    Chip(
-                      label: Text("Gratitude"),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(20),
-                      ),
-                    ),
+                    InkWell(
+                      onTap: () {
+                        if (entryTags.contains("personal")) {
+                          entryTags.remove("personal");
+                        } else {
+                          entryTags.add("personal");
+                        }
 
-                    Chip(
-                      label: Icon(Icons.add, size: 20),
-                      padding: EdgeInsets.all(0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(100),
+                        setState(() {});
+                      },
+                      child: Chip(
+                        label: Text(
+                          "Personal",
+                          style: TextStyle(
+                            color: entryTags.contains("personal")
+                                ? Colors.white
+                                : null,
+                          ),
+                        ),
+                        backgroundColor: entryTags.contains("personal")
+                            ? Color.fromARGB(255, 169, 76, 0)
+                            : null,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(20),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (entryTags.contains("work")) {
+                          entryTags.remove("work");
+                        } else {
+                          entryTags.add("work");
+                        }
+
+                        setState(() {});
+                      },
+                      child: Chip(
+                        label: Text(
+                          "Work",
+                          style: TextStyle(
+                            color: entryTags.contains("work")
+                                ? Colors.white
+                                : null,
+                          ),
+                        ),
+                        backgroundColor: entryTags.contains("work")
+                            ? Color.fromARGB(255, 169, 76, 0)
+                            : null,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(20),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (entryTags.contains("gratitude")) {
+                          entryTags.remove("gratitude");
+                        } else {
+                          entryTags.add("gratitude");
+                        }
+
+                        setState(() {});
+                      },
+                      child: Chip(
+                        label: Text(
+                          "Gratitude",
+                          style: TextStyle(
+                            color: entryTags.contains("gratitude")
+                                ? Colors.white
+                                : null,
+                          ),
+                        ),
+                        backgroundColor: entryTags.contains("gratitude")
+                            ? Color.fromARGB(255, 169, 76, 0)
+                            : null,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(20),
+                        ),
                       ),
                     ),
                   ],
@@ -242,10 +294,12 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                             Journal(
                               id: DateTime.now().second,
                               title: _entryTitleController.text,
-                              mood: currentMood.isNotEmpty ? currentMood :  "Good",
+                              mood: currentMood.isNotEmpty
+                                  ? currentMood
+                                  : "Good",
                               body: _entryBodyController.text,
                               isPinned: false,
-                              tags: ['Work'],
+                              tags: entryTags.toList(),
                               createdAt: DateTime.now(),
                             ),
                           );
@@ -253,6 +307,8 @@ class _NewJournalEntryPageState extends State<NewJournalEntryPage> {
                           setState(() {
                             _entryTitleController.clear();
                             _entryBodyController.clear();
+                            entryTags.clear();
+                            currentMood = '';
                           });
                         }
                       },

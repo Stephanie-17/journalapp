@@ -4,7 +4,7 @@ class Journal {
   String mood;
   final String body;
   bool isPinned;
-  List tags;
+  List<String> tags;
   final DateTime createdAt;
 
   Journal({
